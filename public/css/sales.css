@@ -1,0 +1,52 @@
+/* .logo{
+     margin-top:20px;
+      margin-bottom:20px */
+
+.growth{
+    /* border-style:solid;  */
+    /* border-color:aqua;  */
+    border-width:1px; 
+    height:50px;
+    width:70px; 
+    float:left;
+    margin-left: 20px; 
+}
+.growthtwo{
+    /* border-style:solid;  */
+    /* border-color:rgb(22, 15, 65);  */
+    border-width:1px; 
+    height:60px;
+    width:120px; 
+    float:left;
+    margin-left: 30px;
+}
+.image{
+    float: left;
+}
+  /* properties of salesgrowth */
+.sales_growth {
+    float: left;
+    /* width: 40.5px; */
+    /* height: 8.5px; */
+    font-family: Gelion;
+    font-size: 13px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    text-align: left;
+    color: #64bf5d;
+  }
+  /* properties of pics */
+  .pics{
+    height:50px; 
+    width:170px;
+    margin-top: 20px;
+    margin-left: 60px;
+  }
+  .card_name{
+      /* width:170px;  */
+      /* height:50px; */
+  margin-bottom:30px;
+  }
