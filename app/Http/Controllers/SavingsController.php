@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\plans;
+use App\funds;
+use App\withdraws;
 use DB;
 class SavingsController extends Controller
 {
@@ -106,7 +108,49 @@ class SavingsController extends Controller
     {
         return view('saving.plans');
     }
-    public function submit(){
-        
+    // public function add_money(){
+    //     return view('saving.add_money');
+    // }
+    public function select_plans(){
+        $plans = plans::where('user_id', auth()->user()->id)->get();
+        return view('saving.add_money', compact('plans'));   
+    }
+    public function add_money_store(Request $request){
+        // dd($request->all());
+        $fund = new funds;
+        $fund->amount = $request->input('amount');
+        $fund->plan_id = $request->input('select');
+        $fund->user_id = auth()->user()->id;
+        $fund->save();
+
+        return view('saving.add_money_submit');  
+    }
+    public function select_plans2(){
+        $plans = plans::where('user_id', auth()->user()->id)->get();
+        return view('saving.withdraw', compact('plans'));
+    }
+    public function withdraw_store(Request $request){
+        // dd($request->all());
+        $withdrawal = new withdraws;
+        $withdrawal->amount = $request->input('amount');
+        $withdrawal->reason_for_withdrawal = $request->input('reason');
+        $withdrawal->plan_id = $request->input('select');
+        $withdrawal->user_id = auth()->user()->id;
+        $withdrawal->save();
+
+        return view('saving.withdraw_submit');  
+    }
+    public function show_plans(){
+        $plans = plans::where('user_id', auth()->user()->id)->get();
+        return view('saving.myhome', compact('plans'));
+    }
+    public function new_home(Request $request){
+        $home = new myhome;
+        $home->amount = $request->input('amount');
+        $home->plan_name = $request->input('name');
+        $home->user_id = auth()->user()->id;
+        // $home->save();
+
+        return view('saving.withdraw_submit');  
     }
 }

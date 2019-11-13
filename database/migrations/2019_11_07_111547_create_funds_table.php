@@ -17,7 +17,6 @@ class CreateFundsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('plan_id');
-            $table->string('select_plan');
             $table->float('amount');
         });
     }

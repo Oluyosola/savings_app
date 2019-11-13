@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWithdrawalTablesTable extends Migration
+class CreateWithdrawsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateWithdrawalTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('withdrawal_tables', function (Blueprint $table) {
+        Schema::create('withdraws', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('plan_id');
+            $table->string('reason_for_withdrawal');
             $table->float('amount');
+        
         });
     }
 
@@ -28,6 +30,6 @@ class CreateWithdrawalTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('withdrawal_tables');
+        Schema::dropIfExists('withdraws');
     }
 }

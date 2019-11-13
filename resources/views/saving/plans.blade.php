@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 style ="text-align: center;">Create your plan</h1>
-<form action ="/submit" method="GET">
+<form action ="/submit" method="POST">
     {{csrf_field()}}
     <label><h5>Name of plan</h5></label>
         <input type="text" name="name_of_plan" placeholder="type here" class="form-control"><br>
