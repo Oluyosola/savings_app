@@ -8,9 +8,15 @@
       <th>Target Amount</th>
       <th>Target Date</th>
     </tr>
-    {{-- <tr> --}}
-      {{-- <td>@foreach($plans as $plan)
-        <option value="{{$plan->id}}">{{$plan->name}}</option></td> --}}
-    {{-- </tr> --}}
+    @if (count($plan) >0)
+        @foreach($plan as $plans)
+            <tr>
+                <td>{{$plans->name}}</td>
+                <td>{{$plans->balance}}</td>
+                <td>{{$plans->target_amount}}</td>
+                <td>{{$plans->end_date}}</td>
+            </tr>
+        @endforeach
+     @endif
   </table>
 @endsection

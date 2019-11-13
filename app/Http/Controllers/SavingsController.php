@@ -141,16 +141,7 @@ class SavingsController extends Controller
         return view('saving.withdraw_submit');  
     }
     public function show_plans(){
-        $plans = plans::where('user_id', auth()->user()->id)->get();
-        return view('saving.myhome', compact('plans'));
-    }
-    public function new_home(Request $request){
-        $home = new myhome;
-        $home->amount = $request->input('amount');
-        $home->plan_name = $request->input('name');
-        $home->user_id = auth()->user()->id;
-        // $home->save();
-
-        return view('saving.withdraw_submit');  
+        $plan = plans::all();
+        return view('saving.myhome')->with('plan', $plan);
     }
 }
