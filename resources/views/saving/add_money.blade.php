@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('content')
-<form action= "/add_money_submit" method ="GET">
+<form action= "/add_money_submit" method ="POST">
     {{ csrf_field() }}
     <label>Amount</label>
     <input type = "number" input name="amount" placeholder="₦" class ="form-control"><br>

@@ -18,7 +18,7 @@ Route::get('/add_money', 'SavingsController@select_plans');
 Route::post('/add_money_submit', 'SavingsController@add_money_store');
 Route::post('/submit', 'SavingsController@store');
 Route::get('/withdraw', 'SavingsController@select_plans2');
-Route::get('/withdraw_submit', 'SavingsController@withdraw_store');
+Route::post('/withdraw_submit', 'SavingsController@withdraw_store');
 Route::get('/myhome', 'Savingscontroller@show_plans');
 Route::resource('savings', 'SavingsController');
 
