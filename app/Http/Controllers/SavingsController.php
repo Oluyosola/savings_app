@@ -117,10 +117,10 @@ class SavingsController extends Controller
     }
     public function add_money_store(Request $request){
         $plan = plans::where('id', $request->select)->first();
-    if ($plan->balance > $plan->target_amount){
+        $new_balance =  $plan->balance + $request->amount;
+    if ($new_balance > $plan->target_amount){
         return view('saving.error');
     }else{ 
-        $new_balance =  $plan->balance + $request->amount;
         $plan->update(['balance' => $new_balance]);
         $fund = new funds;
         $fund->amount = $request->input('amount');
@@ -139,11 +139,11 @@ class SavingsController extends Controller
     }
     public function withdraw_store(Request $request){
         $plan = plans::where('id', $request->select)->first();
-    if ($plan->target_amount > $plan->balance){
-        return view('saving.error_second');
-    }else{ 
         $new_balance =  $plan->balance - $request->amount;
-        $plan->update(['balance' => $new_balance]);   
+    if ($request->amount > $plan->balance){
+        return view('saving.error_second');
+    }else{   
+        $plan->update(['balance' => $new_balance]);
         $withdrawal = new withdraws;
         $withdrawal->amount = $request->input('amount');
         $withdrawal->reason_for_withdrawal = $request->input('reason');
