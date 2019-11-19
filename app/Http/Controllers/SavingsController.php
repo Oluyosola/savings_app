@@ -116,24 +116,34 @@ class SavingsController extends Controller
         return view('saving.add_money', compact('plans'));   
     }
     public function add_money_store(Request $request){
-        $plans = plans::where('id', $request->select)->first();
-        // dd($plans);
-        // dd($request->all());
-        $new_balance = $request->amount + $plans->balance;
-        dd($new_balance);
+        $plan = plans::where('id', $request->select)->first();
+    if ($plan->balance > $plan->target_amount){
+        return view('saving.error');
+    }else{ 
+        $new_balance =  $plan->balance + $request->amount;
+        $plan->update(['balance' => $new_balance]);
         $fund = new funds;
         $fund->amount = $request->input('amount');
         $fund->plan_id = $request->input('select');
         $fund->user_id = auth()->user()->id;
         $fund->save();
-        return view('saving.add_money_submit')->with('fund', $fund);  
+        return view('saving.add_money_submit')->with('fund', $fund);
+        }  
     }
+    // public function throw_error(){
+    //     if 
+    // }
     public function select_plans2(){
         $plans = plans::where('user_id', auth()->user()->id)->get();
         return view('saving.withdraw', compact('plans'));
     }
     public function withdraw_store(Request $request){
-        // dd($request->all());
+        $plan = plans::where('id', $request->select)->first();
+    if ($plan->target_amount > $plan->balance){
+        return view('saving.error_second');
+    }else{ 
+        $new_balance =  $plan->balance - $request->amount;
+        $plan->update(['balance' => $new_balance]);   
         $withdrawal = new withdraws;
         $withdrawal->amount = $request->input('amount');
         $withdrawal->reason_for_withdrawal = $request->input('reason');
@@ -141,7 +151,8 @@ class SavingsController extends Controller
         $withdrawal->user_id = auth()->user()->id;
         $withdrawal->save();
 
-        return view('saving.withdraw_submit')->with('withdrawal', $withdrawal);  
+        return view('saving.withdraw_submit')->with('withdrawal', $withdrawal); 
+        } 
     }
     public function show_plans(){
         $plan = plans::all();

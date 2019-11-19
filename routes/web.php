@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'SavingsController@index');
+// Route::get('/', 'SavingsController@throw_error');
 // Route::get('/add_money', 'SavingsController@add_money');
 Route::get('/plans', 'SavingsController@plan');
 Route::get('/add_money', 'SavingsController@select_plans');
