@@ -21,6 +21,7 @@ class CreatePlansTable extends Migration
             $table->date('end_date');
             $table->integer('user_id');
             $table->float('balance');
+            $table->timestamps();
         });
     }
 

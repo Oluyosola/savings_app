@@ -12,8 +12,8 @@
         <input type="text" name="end_date_of_plan" class="form-control" id = "datepicker-3"><br>
          <label><h5>Target Amount</h5></label>
         <input type="number" name="target_amount" placeholder="₦" class="form-control"><br>
-        <label><h5>Balance</h5></label>
-        <input type="number" name="balance" placeholder="₦" class="form-control"><br> 
+        {{-- <label><h5>Balance</h5></label> --}}
+        {{-- <input type="number" name="balance" placeholder="₦" class="form-control"><br>  --}}
         <input type="submit" name="submit" class ="btn btn-primary"> 
 </form>
 @endsection

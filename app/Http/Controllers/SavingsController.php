@@ -52,7 +52,7 @@ class SavingsController extends Controller
         $plan->name = $request->input('name_of_plan');
         $plan->brief_description = $request->input('Brief_description_of_plan');
         $plan->target_amount = $request->input('target_amount');
-        $plan->balance = $request->input('balance');
+        $plan->balance = 0;
         $plan->end_date = $request->input('end_date_of_plan');
         $plan->user_id = auth()->user()->id;
         $plan->save();
@@ -154,7 +154,7 @@ class SavingsController extends Controller
         } 
     }
     public function show_plans(){
-        $plan = Plans::all();
+        $plan = Plans::orderBy('created_at', 'desc')->paginate(10);
         return view('saving.myhome')->with('plan', $plan);
     }
 }
