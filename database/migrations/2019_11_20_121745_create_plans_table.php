@@ -18,7 +18,7 @@ class CreatePlansTable extends Migration
             $table->string('name');
             $table->text('brief_description');
             $table->float('target_amount');
-            $table->timestamp('end_date');
+            $table->date('end_date');
             $table->integer('user_id');
             $table->float('balance');
         });

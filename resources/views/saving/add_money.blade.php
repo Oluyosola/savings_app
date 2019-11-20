@@ -1,7 +1,10 @@
 @extends('layouts.new_app')
 @section('content')
-<form action= "/add_money_submit" method ="POST">
+<form action= "/add" method ="POST">
     {{ csrf_field() }}
+    @if(Session::has('message'))
+        <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+    @endif
     <label>Amount</label>
     <input type = "number" input name="amount" placeholder="₦" class ="form-control"><br>
     <label>Select Plan</label>

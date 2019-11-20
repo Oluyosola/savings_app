@@ -14,7 +14,7 @@
                 <td>{{$plans->name}}</td>
                 <td>{{$plans->balance}}</td>
                 <td>{{$plans->target_amount}}</td>
-                <td>{{$plans->end_date}}</td>
+                <td>{{date("d,M,Y", strtotime($plans->end_date)) }}</td>
             </tr>
         @endforeach
      @endif

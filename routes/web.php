@@ -16,11 +16,13 @@ Route::get('/', 'SavingsController@index');
 // Route::get('/add_money', 'SavingsController@add_money');
 Route::get('/plans', 'SavingsController@plan');
 Route::get('/add_money', 'SavingsController@select_plans');
-Route::post('/add_money_submit', 'SavingsController@add_money_store');
-Route::post('/submit', 'SavingsController@store');
+Route::post('/add', 'SavingsController@add_money_store');
+Route::get('/myhome', 'SavingsController@show_plans');
+Route::post('/plan/create', 'SavingsController@store');
+
 Route::get('/withdraw', 'SavingsController@select_plans2');
-Route::post('/withdraw_submit', 'SavingsController@withdraw_store');
-Route::get('/myhome', 'Savingscontroller@show_plans');
+Route::post('/withdraw_money', 'SavingsController@withdraw_store');
+// Route::post('/myhome', 'Savingscontroller@show_plans');
 Route::resource('savings', 'SavingsController');
 
 Auth::routes();

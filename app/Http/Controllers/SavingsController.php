@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\plans;
-use App\funds;
-use App\withdraws;
+use App\Plans;
+use App\Funds;
+use App\Withdraws;
 use DB;
 class SavingsController extends Controller
 {
@@ -37,6 +37,10 @@ class SavingsController extends Controller
      */
     public function store(Request $request)
     {
+       if( $plan = Plans::where('name', $request->name_of_plan)->first()){
+          return redirect('/plans')->with('error', 'plan name already exists' );
+        }else{
+        // dd($request->all());
         // $this->validate($request,
         // ['name' => 'required',
         // 'brief_description' => 'required',
@@ -44,21 +48,18 @@ class SavingsController extends Controller
         // 'balance' => 'required',
         // 'end_date' => 'required'
         // ]);
-        //  return 123;
-        // dd($request->all());
-        // dd($request->input('name_of_plan'));
-         $plan = new plans;
+        $plan = new Plans;
         $plan->name = $request->input('name_of_plan');
         $plan->brief_description = $request->input('Brief_description_of_plan');
         $plan->target_amount = $request->input('target_amount');
         $plan->balance = $request->input('balance');
-        $plan->end_date = $request->input('End_date_of_plan');
+        $plan->end_date = $request->input('end_date_of_plan');
         $plan->user_id = auth()->user()->id;
         $plan->save();
-        return view('saving.submit');
-        // return redirect('/plans')->with('success', 'You have succcessfully submitted');
- 
+       return redirect('/myhome')->with('success', 'You have succcessfully submitted');
+         }
     }
+    
 
     /**
      * Display the specified resource.
@@ -112,50 +113,48 @@ class SavingsController extends Controller
     //     return view('saving.add_money');
     // }
     public function select_plans(Request $request){
-        $plans = plans::where('user_id', auth()->user()->id)->get();
+        $plans = Plans::where('user_id', auth()->user()->id)->get();
         return view('saving.add_money', compact('plans'));   
     }
     public function add_money_store(Request $request){
-        $plan = plans::where('id', $request->select)->first();
+        $plan = Plans::where('id', $request->select)->first();
         $new_balance =  $plan->balance + $request->amount;
     if ($new_balance > $plan->target_amount){
         return view('saving.error');
     }else{ 
         $plan->update(['balance' => $new_balance]);
-        $fund = new funds;
+        $fund = new Funds;
         $fund->amount = $request->input('amount');
         $fund->plan_id = $request->input('select');
         $fund->user_id = auth()->user()->id;
         $fund->save();
-        return view('saving.add_money_submit')->with('fund', $fund);
-        }  
+        session()->flash('message', 'you have successfully added money'.$request->amount);		
+    return redirect('/add_money')->with('fund', $fund);
+        }
     }
-    // public function throw_error(){
-    //     if 
-    // }
     public function select_plans2(){
-        $plans = plans::where('user_id', auth()->user()->id)->get();
+        $plans = Plans::where('user_id', auth()->user()->id)->get();
         return view('saving.withdraw', compact('plans'));
     }
     public function withdraw_store(Request $request){
-        $plan = plans::where('id', $request->select)->first();
+        $plan = Plans::where('id', $request->select)->first();
         $new_balance =  $plan->balance - $request->amount;
     if ($request->amount > $plan->balance){
         return view('saving.error_second');
     }else{   
         $plan->update(['balance' => $new_balance]);
-        $withdrawal = new withdraws;
+        $withdrawal = new Withdraws;
         $withdrawal->amount = $request->input('amount');
         $withdrawal->reason_for_withdrawal = $request->input('reason');
         $withdrawal->plan_id = $request->input('select');
         $withdrawal->user_id = auth()->user()->id;
         $withdrawal->save();
-
-        return view('saving.withdraw_submit')->with('withdrawal', $withdrawal); 
+        session()->flash('message', 'you have successfully withdrawn '.$request->amount);
+    return redirect('/withdraw')->with('withdrawal', $withdrawal); 
         } 
     }
     public function show_plans(){
-        $plan = plans::all();
+        $plan = Plans::all();
         return view('saving.myhome')->with('plan', $plan);
     }
 }
