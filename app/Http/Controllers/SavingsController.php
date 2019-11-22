@@ -37,7 +37,7 @@ class SavingsController extends Controller
      */
     public function store(Request $request)
     {
-       if( $plan = Plans::where('name', $request->name_of_plan)->first()){
+        if( $plan = Plans::where('name', $request->name_of_plan)->first()){
           return redirect('/plans')->with('error', 'plan name already exists' );
         }else{
         // dd($request->all());
@@ -154,7 +154,7 @@ class SavingsController extends Controller
         } 
     }
     public function show_plans(){
-        $plan = Plans::orderBy('created_at', 'desc')->paginate(10);
+        $plan = Plans::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('saving.myhome')->with('plan', $plan);
     }
 }
