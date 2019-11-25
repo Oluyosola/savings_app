@@ -37,8 +37,13 @@ class SavingsController extends Controller
      */
     public function store(Request $request)
     {
-        if( $plan = Plans::where('name', $request->name_of_plan)->first()){
-          return redirect('/plans')->with('error', 'plan name already exists' );
+        //check if plan exist for the authenticated user
+        // goto plans table
+        // fetch plan based on the user id and also the inetended plan name 
+        
+     $plan = Plans::where(['user_id' => auth()->user()->id, 'name' => $request->name_of_plan])->first();
+     if($plan){
+            return redirect('/plans')->with('error', 'plan name already exists' );
         }else{
         // dd($request->all());
         // $this->validate($request,
